@@ -1,0 +1,29 @@
+{%  extends 'layout.html'   %}  
+{%  block content   %}
+    <div class="content-section">
+            <form method="POST" action="", enctype="multipart/form-data">
+              {{  form.hidden_tag()  }}
+              <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Upload data</legend>
+                <div class="form-group">
+                    {{  form.data_files.label()  }}
+                    {{  form.data_files(class='form-control-file')  }}
+                    {%  if form.data_files.errors %}
+                        {%  for error in form.data_files.errors    %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {%  endfor  %}
+                    {%  endif   %}
+                <div>
+            </fieldset>
+            <div class="form-group">
+              {{  form.submit(class='btn btn-outline-info') }}
+            </div>
+                <h5>{{  message }}</h5>
+            </form>
+
+            {%  if category %}
+                <a href="#">Download the TradeStation Output</a><br>
+                <a href="#">Download the file</a>
+            {% endif %}
+    </div>
+{%  endblock content   %}

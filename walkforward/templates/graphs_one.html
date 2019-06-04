@@ -1,0 +1,40 @@
+{%  extends 'layout.html'   %}  
+{%  block content   %}
+<p>{{ un_anchored_check }}{{out_period}}{{in_period}}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart" id="multi_graph">
+                <script>
+                    var graphs = {{plot_1 | safe}};
+                    Plotly.plot('multi_graph',graphs,{});
+                </script>
+            </div>
+            <div class="chart" id="single_graph_1">
+                <script>
+                    var graphs = {{plot_2 | safe}};
+                    Plotly.plot('single_graph_1',graphs,{});
+                </script>
+            </div>
+            <div class="chart" id="single_graph_2">
+                <script>
+                    var graphs = {{plot_3 | safe}};
+                    Plotly.plot('single_graph_2',graphs,{});
+                </script>
+            </div>
+            <div class="chart" id="single_graph_3">
+                <script>
+                    var graphs = {{plot_4 | safe}};
+                    Plotly.plot('single_graph_3',graphs,{});
+                </script>
+            </div>
+            <div class="chart" id="single_graph_4">
+                <script>
+                    var graphs = {{plot_5 | safe}};
+                    Plotly.plot('single_graph_4',graphs,{});
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+{%  endblock content   %}

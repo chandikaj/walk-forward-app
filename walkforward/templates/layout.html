@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    <!-- Plotly JavaScript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+    {% if title %}
+        <title>Walk forward app - {{ title }}</title>
+    {% else %}
+        <title>Walk forward app</title>
+    {% endif %}
+
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <a class="navbar-brand mr-4" href="/">Walk Forward App</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" onclick="return confirm('Are you sure? All your progress will be lost')" href="{{ url_for('upload') }}">Upload</a>
+              <a class="nav-item nav-link" href="{{ url_for('graphs') }}">Graphs</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="content-section">
+            <legend class="border-bottom mb-4">Input parameters</legend>
+            <form method="POST" action="{{ url_for('graphs') }}">
+                <div class="form-group">
+                  <div class="input-group">
+                      <p style="margin-bottom: 8%">WalkForward Type
+                          <select name="type_select" class="selectpicker form-control" style="margin-top: 5%">
+                            <option value="Anchored">Anchored</option>
+                            <option value="Unanchored">Unanchored</option>                                            
+                          </select></p>
+                      <p>In sample range <input type="number" name="in_sample" class="form-control form-control-sm"/></p>
+                      <p>Out sample range <input type="number" name="out_sample" class="form-control form-control-sm"/></p>
+                  </div>
+                  <input type="submit" name="Create_Graph" value="Create_Graph" id="graph_button" class="btn btn-outline-info" style="margin-top: 4%"/>
+                  <hr style="margin-top: 20%">
+                  <div class='content_section' style="visibility: visible; display: block;" id="content_section_div">
+                  <p style="margin-top: 10%">Select the optimal fitness function</p>  
+                    <div style="font-size: 90%; margin-bottom: 5%">
+                        <input type="radio" name="optimal" value="F1" checked> Fitness Function 1<br>
+                        <input type="radio" name="optimal" value="F2"> Fitness Function 2<br>
+                        <input type="radio" name="optimal" value="F3"> Fitness Function 3<br>
+                        <input type="radio" name="optimal" value="F4"> Fitness Function 4
+                    </div>
+                  <input type="submit" name="Update_best" value="Update_best" class="btn btn-outline-info" style="margin-top: 4%"/>
+                </div>
+                <hr style="margin-top: 20%">
+                  <h6 style="margin-top: 8%">TradeStation Output file creation</h6>
+                  <select name="ts_output_select" class="selectpicker form-control" style="margin-top: 5%">
+                    {% for item in option_list %}
+                      <option value='{{ item }}'>{{ item }}</option>
+                    {% endfor %}
+                  </select>
+                  <input type="submit" name="Download_output" value="Download_output" class="btn btn-outline-info" style="margin-top: 8%"/>
+                </div>
+              </form>
+            
+        </div>
+      </div>
+      <div class="col-md-9">
+        {%  with messages = get_flashed_messages(with_categories=true)  %}
+        {%  if messages %}
+        {%  for category, message in messages %}
+        <div class="alert alert-{{  category  }}">
+          {{  message }}
+        </div>
+        {%  endfor  %}
+        {%  endif %}
+        {%  endwith %}
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </main>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

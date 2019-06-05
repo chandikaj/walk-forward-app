@@ -114,7 +114,7 @@ def graphs():
             in_period, out_period, un_anchored_check = [w.strip('\n') for w in para]
           
             optimal_function = request.form.get('optimal')
-            multichart, single_charts, best_lines = make_plotly_plots(int(in_period), int(out_period), daily_returns, 
+            best_lines = make_plotly_plots(int(in_period), int(out_period), daily_returns, 
                                                                       eval(un_anchored_check), optimal=optimal_function, create_best=True)
             
             if os.path.isfile(path) == True:
@@ -124,5 +124,4 @@ def graphs():
                 for item in figure['data']:
                     option_list.append(item['name'])
 
-            return render_template('graphs_second.html', plot_1=multichart, plot_2=single_charts[0], plot_3=single_charts[1], 
-                                    plot_4=single_charts[2], plot_5=single_charts[3], plot_6=best_lines, option_list=option_list)
+            return render_template('graphs_second.html', plot_6=best_lines, option_list=option_list)
